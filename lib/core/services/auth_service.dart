@@ -1,3 +1,4 @@
+import 'package:coffee_appv2/core/services/favorite_service.dart';
 import 'package:coffee_appv2/core/services/firestore_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -36,6 +37,7 @@ class AuthService {
         credential.user!,
         customName: name,
       );
+      FavoriteService.instance.reloadForCurrentUser();
     }
 
     return credential;
@@ -52,6 +54,7 @@ class AuthService {
     );
     if (cred.user != null) {
       await FirestoreService.instance.saveUserRecord(cred.user!);
+      FavoriteService.instance.reloadForCurrentUser();
     }
     return cred;
   }
@@ -74,6 +77,7 @@ class AuthService {
       if (userCred.user != null) {
         // Save Google user record in Firestore under /users/{uid}
         await FirestoreService.instance.saveUserRecord(userCred.user!);
+        FavoriteService.instance.reloadForCurrentUser();
       }
       return userCred;
     } catch (e) {

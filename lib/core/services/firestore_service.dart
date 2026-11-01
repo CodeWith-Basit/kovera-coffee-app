@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffee_appv2/models/cart_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 /// Centralized Firestore service to manage separated user data
 class FirestoreService {
@@ -22,24 +23,21 @@ class FirestoreService {
 
   /// Save or update user profile document in /users/{uid}
   Future<void> saveUserRecord(User user, {String? customName}) async {
-    final docRef = _usersCol.doc(user.uid);
-    final docSnap = await docRef.get();
+    try {
+      final docRef = _usersCol.doc(user.uid);
+      final data = <String, dynamic>{
+        'uid': user.uid,
+        'email': user.email ?? '',
+        'displayName': (customName != null && customName.isNotEmpty)
+            ? customName
+            : (user.displayName ?? ''),
+        'photoURL': user.photoURL ?? '',
+        'lastActive': FieldValue.serverTimestamp(),
+      };
 
-    final data = <String, dynamic>{
-      'uid': user.uid,
-      'email': user.email ?? '',
-      'displayName': (customName != null && customName.isNotEmpty)
-          ? customName
-          : (user.displayName ?? ''),
-      'photoURL': user.photoURL ?? '',
-      'lastActive': FieldValue.serverTimestamp(),
-    };
-
-    if (!docSnap.exists) {
-      data['createdAt'] = FieldValue.serverTimestamp();
-      await docRef.set(data);
-    } else {
-      await docRef.update(data);
+      await docRef.set(data, SetOptions(merge: true));
+    } catch (e) {
+      debugPrint('FirestoreService.saveUserRecord warning: $e');
     }
   }
 
@@ -73,34 +71,43 @@ class FirestoreService {
     required String price,
     required String subtitle,
   }) async {
-    final col = _userFavoritesCol;
-    if (col == null) return;
+    try {
+      final col = _userFavoritesCol;
+      if (col == null) return;
 
-    // Use sanitized title as document ID for easy matching
-    final docId = title.trim().toLowerCase().replaceAll(RegExp(r'\s+'), '_');
-    final docRef = col.doc(docId);
-    final doc = await docRef.get();
+      // Use sanitized title as document ID for easy matching
+      final docId = title.trim().toLowerCase().replaceAll(RegExp(r'\s+'), '_');
+      final docRef = col.doc(docId);
+      final doc = await docRef.get();
 
-    if (doc.exists) {
-      await docRef.delete();
-    } else {
-      await docRef.set({
-        'title': title,
-        'imgurl': imgurl,
-        'price': price,
-        'subtitle': subtitle,
-        'addedAt': FieldValue.serverTimestamp(),
-      });
+      if (doc.exists) {
+        await docRef.delete();
+      } else {
+        await docRef.set({
+          'title': title,
+          'imgurl': imgurl,
+          'price': price,
+          'subtitle': subtitle,
+          'addedAt': FieldValue.serverTimestamp(),
+        });
+      }
+    } catch (e) {
+      debugPrint('FirestoreService.toggleFavorite warning: $e');
     }
   }
 
   /// Check if an item is favorite
   Future<bool> isFavorite(String title) async {
-    final col = _userFavoritesCol;
-    if (col == null) return false;
-    final docId = title.trim().toLowerCase().replaceAll(RegExp(r'\s+'), '_');
-    final doc = await col.doc(docId).get();
-    return doc.exists;
+    try {
+      final col = _userFavoritesCol;
+      if (col == null) return false;
+      final docId = title.trim().toLowerCase().replaceAll(RegExp(r'\s+'), '_');
+      final doc = await col.doc(docId).get();
+      return doc.exists;
+    } catch (e) {
+      debugPrint('FirestoreService.isFavorite warning: $e');
+      return false;
+    }
   }
 
   // ==========================================

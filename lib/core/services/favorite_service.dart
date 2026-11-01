@@ -16,18 +16,23 @@ class FavoriteService {
 
   /// Listen to user's private favorites subcollection in Firestore
   void _initCloudListener() {
-    FirestoreService.instance.getFavoritesStream()?.listen((snapshot) {
-      final cloudItems = snapshot.docs.map((doc) {
-        final data = doc.data();
-        return FavoriteItem(
-          title: data['title'] as String? ?? doc.id,
-          imgurl: data['imgurl'] as String? ?? '',
-          subtitle: data['subtitle'] as String? ?? '',
-          price: data['price'] as String? ?? '0.00',
-        );
-      }).toList();
-      favoritesNotifier.value = cloudItems;
-    });
+    FirestoreService.instance.getFavoritesStream()?.listen(
+      (snapshot) {
+        final cloudItems = snapshot.docs.map((doc) {
+          final data = doc.data();
+          return FavoriteItem(
+            title: data['title'] as String? ?? doc.id,
+            imgurl: data['imgurl'] as String? ?? '',
+            subtitle: data['subtitle'] as String? ?? '',
+            price: data['price'] as String? ?? '0.00',
+          );
+        }).toList();
+        favoritesNotifier.value = cloudItems;
+      },
+      onError: (Object error) {
+        debugPrint('FavoriteService stream warning: $error');
+      },
+    );
   }
 
   /// Reload favorites when user logs in
