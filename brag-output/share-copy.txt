@@ -1,0 +1,2 @@
+Introducing KŌVÉRA: your sanctuary for premium coffee moments, bespoke brew customization, and artisan bakery ordering. Crafted with Flutter & Firebase.
+

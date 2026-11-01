@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>KŌVÉRA - Artisan Coffee Launch Video</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #15100E;
+        font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        color: #F6F0E7;
+      }
+
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        background: radial-gradient(circle at 50% 18%, #2B1D17 0%, #18110E 68%, #0E0A08 100%);
+        overflow: hidden;
+      }
+
+      /* Warm Luxury Roastery Ambient Glows */
+      .ambient-glow-top {
+        position: absolute;
+        width: 1300px;
+        height: 1300px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(196, 122, 69, 0.24) 0%, rgba(21, 16, 14, 0) 65%);
+        top: -320px;
+        left: -110px;
+        pointer-events: none;
+      }
+
+      .ambient-glow-bottom {
+        position: absolute;
+        width: 1200px;
+        height: 1200px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(217, 154, 99, 0.16) 0%, rgba(21, 16, 14, 0) 70%);
+        bottom: -260px;
+        right: -100px;
+        pointer-events: none;
+      }
+
+      .roastery-accent-ring {
+        position: absolute;
+        width: 820px;
+        height: 820px;
+        border: 1px solid rgba(217, 154, 99, 0.12);
+        border-radius: 50%;
+        top: 52%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+
+      /* Top Persistent Header */
+      .header-bar {
+        position: absolute;
+        top: 76px;
+        left: 70px;
+        right: 70px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 50;
+      }
+
+      .brand-badge {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        background: rgba(32, 22, 19, 0.92);
+        border: 1px solid rgba(217, 154, 99, 0.4);
+        padding: 14px 30px;
+        border-radius: 999px;
+      }
+
+      .brand-dot {
+        width: 14px;
+        height: 14px;
+        background: #D99A63;
+        border-radius: 50%;
+        box-shadow: 0 0 16px #D99A63;
+      }
+
+      .brand-name {
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: 30px;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        color: #F6F0E7;
+      }
+
+      .tech-pill {
+        font-size: 22px;
+        font-weight: 700;
+        color: #E0CFC4;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      /* Stage Narrative Captions */
+      .stage-text-container {
+        position: absolute;
+        top: 180px;
+        left: 70px;
+        right: 70px;
+        height: 210px;
+        z-index: 40;
+      }
+
+      .scene-caption {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .caption-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: #F0B27A;
+        font-size: 23px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+      }
+
+      .caption-title {
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: 62px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: #F6F0E7;
+        line-height: 1.12;
+      }
+
+      .caption-title span {
+        color: #F0B27A;
+      }
+
+      .caption-desc {
+        font-size: 29px;
+        color: #DECFC4;
+        font-weight: 500;
+        max-width: 920px;
+        line-height: 1.3;
+      }
+
+      /* Luxury Mobile Mockup Showcase */
+      .phone-mockup-wrapper {
+        position: absolute;
+        top: 430px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 640px;
+        height: 1300px;
+        border-radius: 52px;
+        background: #0B0807;
+        padding: 12px;
+        box-shadow:
+          0 0 0 3px #4A332A,
+          0 30px 100px rgba(0, 0, 0, 0.85),
+          0 0 85px rgba(196, 122, 69, 0.22);
+        z-index: 30;
+      }
+
+      .phone-screen {
+        width: 100%;
+        height: 100%;
+        border-radius: 42px;
+        overflow: hidden;
+        position: relative;
+        background: #201613;
+      }
+
+      .screen-clip-video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+      }
+
+      /* Floating Feature Callout Badges */
+      .floating-tag {
+        position: absolute;
+        background: #221713;
+        border: 1px solid rgba(240, 178, 122, 0.45);
+        padding: 18px 30px;
+        border-radius: 24px;
+        font-size: 25px;
+        font-weight: 700;
+        color: #F6F0E7;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        box-shadow: 0 18px 44px rgba(0, 0, 0, 0.65);
+        z-index: 35;
+      }
+
+      /* Outro Final Brand Lock */
+      .outro-overlay {
+        position: absolute;
+        inset: 0;
+        background: #15100E;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 80px;
+        opacity: 0;
+        z-index: 60;
+      }
+
+      .logo-frame {
+        width: 220px;
+        height: 220px;
+        background: #201613;
+        border: 2px solid #D99A63;
+        border-radius: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 20px 60px rgba(196, 122, 69, 0.35);
+        margin-bottom: 38px;
+        overflow: hidden;
+      }
+
+      .logo-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .outro-title {
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: 86px;
+        font-weight: 800;
+        color: #F6F0E7;
+        letter-spacing: 0.14em;
+      }
+
+      .outro-tagline {
+        font-size: 34px;
+        color: #E2D3C8;
+        margin-top: 18px;
+        font-weight: 500;
+      }
+
+      .outro-pillars {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        max-width: 840px;
+        margin-top: 48px;
+      }
+
+      .pillar-box {
+        background: #241915;
+        border: 1px solid rgba(217, 154, 99, 0.35);
+        padding: 24px 36px;
+        border-radius: 20px;
+        font-size: 29px;
+        font-weight: 700;
+        color: #F6F0E7;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .pillar-check {
+        color: #F0B27A;
+        font-size: 32px;
+      }
+
+      .flutter-credit {
+        margin-top: 48px;
+        font-size: 25px;
+        color: #D4C3B8;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="20"
+      data-width="1080"
+      data-height="1920"
+    >
+      <!-- Audio Layer (Distinct track indices for every clip) -->
+      <audio id="bg-music" class="clip" data-start="0" data-duration="20" data-track-index="0" data-volume="0.4" src="assets/music/music.mp3"></audio>
+      <audio id="sfx-drop-1" class="clip" data-start="0.2" data-duration="0.5" data-track-index="1" data-volume="0.55" src="assets/sfx/drop.ogg"></audio>
+      <audio id="sfx-switch" class="clip" data-start="4.39" data-duration="0.5" data-track-index="2" data-volume="0.55" src="assets/sfx/switch.ogg"></audio>
+      <audio id="sfx-click-1" class="clip" data-start="8.74" data-duration="0.5" data-track-index="3" data-volume="0.55" src="assets/sfx/click.ogg"></audio>
+      <audio id="sfx-click-2" class="clip" data-start="13.11" data-duration="0.5" data-track-index="4" data-volume="0.55" src="assets/sfx/click.ogg"></audio>
+      <audio id="sfx-bell" class="clip" data-start="15.29" data-duration="1.2" data-track-index="5" data-volume="0.65" src="assets/sfx/bell.ogg"></audio>
+
+      <!-- Ambient Roastery Glows -->
+      <div class="ambient-glow-top" id="bg-glow-1"></div>
+      <div class="ambient-glow-bottom" id="bg-glow-2"></div>
+      <div class="roastery-accent-ring"></div>
+
+      <!-- Top Header -->
+      <div class="header-bar">
+        <div class="brand-badge">
+          <div class="brand-dot"></div>
+          <span class="brand-name">K Ō V É R A</span>
+        </div>
+        <div class="tech-pill">Artisan Coffee App</div>
+      </div>
+
+      <!-- Stage Captions -->
+      <div class="stage-text-container">
+        <!-- Caption 1: Sanctuary Hook (0.0s - 4.39s) -->
+        <div class="scene-caption" id="cap-1">
+          <div class="caption-pill">☕ Artisanal Roasts</div>
+          <div class="caption-title">What Will You <span>Sip Today?</span></div>
+          <div class="caption-desc">Your sanctuary for premium coffee moments & morning edits.</div>
+        </div>
+
+        <!-- Caption 2: Specialties & Bakery (4.39s - 8.74s) -->
+        <div class="scene-caption" id="cap-2">
+          <div class="caption-pill">🥐 Freshly Baked Daily</div>
+          <div class="caption-title">Our <span>Specialties & Treats</span></div>
+          <div class="caption-desc">Single-origin espresso, ceremonial matcha, cookies & cakes.</div>
+        </div>
+
+        <!-- Caption 3: Bespoke Cold Brew Customization (8.74s - 13.11s) -->
+        <div class="scene-caption" id="cap-3">
+          <div class="caption-pill">✨ Tailored To Your Palate</div>
+          <div class="caption-title">Bespoke <span>Brew Crafting</span></div>
+          <div class="caption-desc">Customize cup size, sweetness level, and ice in one tap.</div>
+        </div>
+
+        <!-- Caption 4: Curated Collections (13.11s - 15.29s) -->
+        <div class="scene-caption" id="cap-4">
+          <div class="caption-pill">🍂 Seasonal Editions</div>
+          <div class="caption-title">Curated <span>Collections</span></div>
+          <div class="caption-desc">Explore warm autumn blends and artisan roastery drops.</div>
+        </div>
+
+        <!-- Caption 5: Instant Checkout & Order Confirmed (15.29s - 17.47s) -->
+        <div class="scene-caption" id="cap-5">
+          <div class="caption-pill">⚡ Seamless Ordering</div>
+          <div class="caption-title">Ready In <span>~12 Minutes</span></div>
+          <div class="caption-desc">Fast store pickup & artisan delivery with real-time sync.</div>
+        </div>
+      </div>
+
+      <!-- Floating Callout Pills -->
+      <div class="floating-tag" id="float-tag-1" style="left: 60px; bottom: 115px; opacity: 0;">
+        <span>☕</span>
+        <span>Caramel Cloud Latte • 10% OFF</span>
+      </div>
+
+      <div class="floating-tag" id="float-tag-2" style="right: 60px; bottom: 115px; opacity: 0;">
+        <span>🧊</span>
+        <span>Vanilla Cold Brew • 18h Steeped</span>
+      </div>
+
+      <div class="floating-tag" id="float-tag-3" style="left: 60px; bottom: 115px; opacity: 0;">
+        <span>✔</span>
+        <span>Order Confirmed! Ready in ~12 mins</span>
+      </div>
+
+      <!-- Phone Mockup with Real Recorded App Segments -->
+      <div class="phone-mockup-wrapper" id="phone-container">
+        <div class="phone-screen">
+          <video id="vid-1" class="screen-clip-video" data-start="0" data-duration="4.39" src="assets/seg1_home.mp4" muted playsinline></video>
+          <video id="vid-2" class="screen-clip-video" data-start="4.39" data-duration="4.35" src="assets/seg2_bakery.mp4" muted playsinline></video>
+          <video id="vid-3" class="screen-clip-video" data-start="8.74" data-duration="4.37" src="assets/seg3_coldbrew.mp4" muted playsinline></video>
+          <video id="vid-4" class="screen-clip-video" data-start="13.11" data-duration="2.18" src="assets/seg4_explore.mp4" muted playsinline></video>
+          <video id="vid-5" class="screen-clip-video" data-start="15.29" data-duration="2.18" src="assets/seg5_checkout.mp4" muted playsinline></video>
+        </div>
+      </div>
+
+      <!-- Outro Brand Lock (17.47s - 20.00s) -->
+      <div class="outro-overlay" id="outro-card">
+        <div class="logo-frame" id="outro-logo">
+          <img src="assets/images/logo.png" alt="KŌVÉRA" />
+        </div>
+        <div class="outro-title">K Ō V É R A</div>
+        <div class="outro-tagline">Crafted for your moment.</div>
+
+        <div class="outro-pillars">
+          <div class="pillar-box">
+            <span class="pillar-check">✔</span>
+            <span>Single-Origin Specialty Coffee & Tea</span>
+          </div>
+          <div class="pillar-box">
+            <span class="pillar-check">✔</span>
+            <span>Handcrafted Cakes & Cookies Baked Daily</span>
+          </div>
+          <div class="pillar-box">
+            <span class="pillar-check">✔</span>
+            <span>Fast Store Pickup & Artisan Delivery</span>
+          </div>
+        </div>
+
+        <div class="flutter-credit">Crafted with Flutter & Firebase</div>
+      </div>
+    </div>
+
+    <!-- GSAP Master Timeline -->
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Audio-reactive / rhythmic breathing on ambient roastery glow
+      tl.to("#bg-glow-1", { scale: 1.24, opacity: 0.92, duration: 2.73, yoyo: true, repeat: 6, ease: "sine.inOut" }, 0);
+      tl.to("#bg-glow-2", { scale: 1.2, opacity: 0.85, duration: 2.73, yoyo: true, repeat: 6, ease: "sine.inOut" }, 0);
+
+      // Phone Mockup Entrance
+      tl.fromTo(
+        "#phone-container",
+        { y: 60, opacity: 0, scale: 0.94 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.75, ease: "power3.out" },
+        0.1
+      );
+
+      // --- SCENE 1: SPLASH TO HOME (0.00s - 4.39s) ---
+      tl.set("#vid-1", { opacity: 1 }, 0);
+      tl.fromTo("#cap-1", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 0.2);
+      tl.fromTo("#float-tag-1", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.55, ease: "back.out(1.5)" }, 1.09);
+
+      tl.to("#cap-1", { opacity: 0, y: -18, duration: 0.28, ease: "power2.in" }, 4.08);
+      tl.to("#float-tag-1", { opacity: 0, y: -10, duration: 0.28 }, 4.08);
+      tl.to("#vid-1", { opacity: 0, duration: 0.25 }, 4.15);
+
+      // --- SCENE 2: SPECIALTIES & BAKERY (4.39s - 8.74s) ---
+      tl.set("#vid-2", { opacity: 1 }, 4.39);
+      tl.fromTo("#cap-2", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 4.45);
+
+      tl.to("#cap-2", { opacity: 0, y: -18, duration: 0.28, ease: "power2.in" }, 8.42);
+      tl.to("#vid-2", { opacity: 0, duration: 0.25 }, 8.50);
+
+      // --- SCENE 3: BESPOKE COLD BREW CUSTOMIZATION (8.74s - 13.11s) ---
+      // beat-locked: 8.74s
+      tl.set("#vid-3", { opacity: 1 }, 8.74);
+      tl.fromTo("#cap-3", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 8.80);
+      tl.fromTo("#float-tag-2", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.55, ease: "back.out(1.5)" }, 9.29);
+
+      tl.to("#cap-3", { opacity: 0, y: -18, duration: 0.28, ease: "power2.in" }, 12.80);
+      tl.to("#float-tag-2", { opacity: 0, y: -10, duration: 0.28 }, 12.80);
+      tl.to("#vid-3", { opacity: 0, duration: 0.25 }, 12.88);
+
+      // --- SCENE 4: CURATED COLLECTIONS (13.11s - 15.29s) ---
+      // beat-locked: 13.11s
+      tl.set("#vid-4", { opacity: 1 }, 13.11);
+      tl.fromTo("#cap-4", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 13.16);
+
+      tl.to("#cap-4", { opacity: 0, y: -18, duration: 0.25, ease: "power2.in" }, 15.02);
+      tl.to("#vid-4", { opacity: 0, duration: 0.22 }, 15.08);
+
+      // --- SCENE 5: INSTANT CHECKOUT & ORDER CONFIRMED (15.29s - 17.47s) ---
+      tl.set("#vid-5", { opacity: 1 }, 15.29);
+      tl.fromTo("#cap-5", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 15.34);
+      tl.fromTo("#float-tag-3", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 15.84);
+      tl.to(
+        "#phone-container",
+        {
+          boxShadow: "0 0 0 3px #D99A63, 0 30px 100px rgba(0,0,0,0.9), 0 0 110px rgba(217, 154, 99, 0.4)",
+          duration: 0.6,
+        },
+        15.84
+      );
+
+      // Exit Phone Showcase
+      tl.to("#float-tag-3", { opacity: 0, duration: 0.25 }, 17.20);
+      tl.to("#cap-5", { opacity: 0, duration: 0.25 }, 17.20);
+      tl.to("#phone-container", { scale: 0.92, opacity: 0, duration: 0.4, ease: "power3.in" }, 17.20);
+
+      // --- SCENE 6: OUTRO BRAND LOCK (17.47s - 20.00s) ---
+      // beat-locked: 17.47s
+      tl.to("#outro-card", { opacity: 1, duration: 0.45, ease: "power2.out" }, 17.47);
+      tl.fromTo(
+        "#outro-logo",
+        { scale: 0.65, opacity: 0, rotation: -5 },
+        { scale: 1, opacity: 1, rotation: 0, duration: 0.65, ease: "back.out(1.8)" },
+        17.55
+      );
+      // beat-grid: pillar 1 at 18.02s, pillar 2 at 18.56s, pillar 3 at 19.10s
+      tl.fromTo(
+        ".pillar-box",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.4, stagger: 0.54, ease: "power2.out" },
+        18.02
+      );
+      tl.fromTo(".flutter-credit", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power2.out" }, 19.20);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
+
